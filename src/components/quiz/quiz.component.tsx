@@ -1,87 +1,69 @@
 // Hooks
 import { useContext, useState } from "react";
-import { QuizContext } from "../../context/quiz/quiz.context";
-import Option from "../option/option.component";
-
+// Context
+import { QuizContext } from "../../context/quiz-context/quiz.context";
 // Components
 import Question from "../question/question.component";
+import Option from "../option/option.component";
+// Style
+import QuizContainer from "./quiz.style";
 
-// Styles
-import { QuizContainer } from "./quiz.style";
 
 const Quiz = () => {
 
-    const questions = [
-        {
-            id: 1,
-            text: "What is the meaning of life ?",
-            answerId: 1,
-            options: [
-                {
-                    id: 1,
-                    text: "33",
-                },
-                {
-                    id: 2,
-                    text: "25",
-                },
-                {
-                    id: 3,
-                    text: "42",
-                }
-            ]
-        },
-        {
-            id: 2,
-            text: "What is real name of Darth Vader ?",
-            answerId: 2,
-            options: [
-                {
-                    id: 1,
-                    text: "Yoda"
-                },
-                {
-                    id: 2,
-                    text: "Anakin",
-                },
-                {
-                    id: 3,
-                    text: "Gredo",
-                }
-            ]
-        }
-    ]
-
+    const { questions, addToScore, score } = useContext(QuizContext);
     const [currentQuestion, setCurrentQuestion] = useState(0);
-    const [userAnswer, setUserAnswer] = useState(-1);
-    let answers: number[] = [];
-    const quizContext = useContext(QuizContext);
+    const [currentAnswer, setCurrentAnswer] = useState(-1);
+    const quizBtnText = currentQuestion < questions.length - 1 ? 'Next Question' : 'Finish Quiz';
+    const [finishedQuiz, setFinishedQuiz] = useState(false);
 
-    const handleQuestionFlow = () => {
-        
+    const checkIfIsRight = () => {
+        if (questions[currentQuestion].answerId === currentAnswer) {
+            addToScore(1);
+        }
     }
 
-    const handleQuestionAnswer = (answerId: number) => {
-        answers[currentQuestion] = answerId;
+    const handleQuizFlow = () => {
+        if (currentAnswer == -1) return;
+
+        checkIfIsRight()
+        const indexNextQuestion = currentQuestion + 1;
+
+        if (indexNextQuestion < questions.length) {
+            setCurrentQuestion(currentQuestion + 1);
+            setCurrentAnswer(-1);
+        } else {
+            setFinishedQuiz(true)
+        }
+    }
+
+    const ScoreScreen = () => {
+        return (
+            <h1>{`your score: ${score}`}</h1>
+        )
     }
 
     return (
-        
         <QuizContainer>
-            <Question
-                question={quizContext.questions[currentQuestion]}
-                handleQuestionAnswer={handleQuestionAnswer}
+            {!finishedQuiz ?
+                <Question question={questions[currentQuestion]}>
+                    {questions[currentQuestion].options.map((option) =>
+                        <Option
+                            selected={option.id === currentAnswer}
+                            key={option.id}
+                            text={option.text}
+                            handleClick={() => setCurrentAnswer(option.id)}
+                        />
+                    )}
+                </Question>
+                :
+                <ScoreScreen />
+            }
+            <button
+                className="quiz-btn"
+                onClick={handleQuizFlow}
             >
-                {questions[currentQuestion].options.map(option =>
-                    <Option
-                        option={option}
-                        selected={userAnswer == option.id}
-                        clickHandler={() => setUserAnswer(option.id)}
-                    />
-                )}
-            </Question>
-            <button onClick={handleQuestionFlow}>
-                {currentQuestion < questions.length - 1 ? 'Next Question' : 'Finish Quiz'}
+                {quizBtnText}
             </button>
         </QuizContainer>
     )

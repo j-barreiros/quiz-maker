@@ -1,22 +1,16 @@
-import { QuestionOptionType } from "../../context/data/data.types"
-
-// Style
-import { StyledOption } from "./option.style";
+import StyledOption from "./option.style";
 
 type OptionProps = {
-    option: QuestionOptionType,
-    selected: boolean,
-    clickHandler: () => void;
+    text: string,
+    selected: boolean;
+    handleClick: () => void;
 }
 
-const Option = ({ option, selected, clickHandler }: OptionProps) => {
-
-    const { id, text } = option;
-
+const Option = ({ text, selected, handleClick }: OptionProps) => {
     return (
         <StyledOption
             selected={selected}
-            onClick={clickHandler}
+            onClick={handleClick}
         >
             {text}
         </StyledOption>

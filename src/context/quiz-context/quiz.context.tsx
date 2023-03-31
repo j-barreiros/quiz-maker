@@ -13,8 +13,8 @@ const QuizContextProvider = ({children} : QuizContextProps) => {
     const questions = [
         {
             id: 1,
-            text: "What is the meaning of life ?",
-            answerId: 1,
+            prompt: "What is the meaning of life ?",
+            answerId: 3,
             options: [
                 {
                     id: 1,
@@ -32,7 +32,7 @@ const QuizContextProvider = ({children} : QuizContextProps) => {
         },
         {
             id: 2,
-            text: "What is real name of Darth Vader ?",
+            prompt: "What is real name of Darth Vader ?",
             answerId: 2,
             options: [
                 {
@@ -48,25 +48,39 @@ const QuizContextProvider = ({children} : QuizContextProps) => {
                     text: "Gredo",
                 }
             ]
+        },
+        {
+            id: 3,
+            prompt: "What is real name of Baby Yoda ?",
+            answerId: 3,
+            options: [
+                {
+                    id: 1,
+                    text: "Luke"
+                },
+                {
+                    id: 2,
+                    text: "Gredo",
+                },
+                {
+                    id: 3,
+                    text: "Grogu",
+                }
+            ]
         }
     ]
+
     const [score, setScore] = useState(0);
-    const [userAnswers, setUserAnswers] = useState<{questionId:number, answerIsRight: boolean}[]>([]);
-    const saveUserAnswers = (questionId : number, userAnswerId: number) => {
-        questions.forEach(question => {
-            if(question.id == questionId) {
-                if(question.answerId == userAnswerId) {
-                    setScore(score + 1);
-                }
-            }
-        })
+
+    const addToScore = (pointsToAdd: number) => {
+        setScore(score + pointsToAdd);
+        console.log(score)
     }
 
     const ContextValue = {
         questions : questions,
-        userAnswers : userAnswers,
         score: score,
-        saveUserAnswers : saveUserAnswers,
+        addToScore: addToScore,
     }
 
     return (

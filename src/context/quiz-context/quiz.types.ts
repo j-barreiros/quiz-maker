@@ -5,14 +5,13 @@ export type QuestionOptionType = {
 
 export type QuestionType = {
     id: number,
-    text: string,
+    prompt: string,
     answerId: number,
     options: QuestionOptionType[],
 }
 
 export type QuizContextType = {
     questions: QuestionType[],
-    userAnswers: {questionId : number, answerIsRight : boolean}[],
     score: number,
-    saveUserAnswers: (questionId: number, userAnswerId : number) => void;
+    addToScore: (pointsToAdd : number) => void;
 }

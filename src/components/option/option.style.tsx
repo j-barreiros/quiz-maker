@@ -1,16 +1,14 @@
 import styled from "styled-components";
 
 type StyledOptionProps = {
-    selected : boolean
-}
+    selected : boolean;
+} 
 
-export const StyledOption = styled.button<StyledOptionProps>`
+const StyledOption = styled.button<StyledOptionProps>`
     border: none;
-    background-color: ${props => props.selected ? "#ccc" : "#aaa"};
-    margin: 5px 10px;
-
-    &:hover {
-        background-color: #bbb;
-        cursor:pointer;
-    }
+    background-color: ${(props) => props.selected ? "red" : "blue"};
+    margin: 3px;
+    cursor: pointer;
 `
+
+export default StyledOption;

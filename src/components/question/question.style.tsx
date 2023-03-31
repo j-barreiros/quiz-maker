@@ -1,16 +1,14 @@
 import styled from "styled-components";
 
-export const QuestionContainer = styled.section`
+const QuestionContainer = styled.section`
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: center;
-
-    .question-prompt {
-        font-weight: bold;
-    }
-
-    .options-container {
+    .options-section {
+        width: 100%;
         display: flex;
         flex-direction: column;
     }
 `
+export default QuestionContainer;

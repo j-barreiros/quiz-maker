@@ -1,5 +1,9 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
-export const QuizContainer = styled.section`
-    background-color: #777;
+const QuizContainer = styled.section`
+    display: flex;
+    flex-direction: column;
+    background-color: gray;
 `
+
+export default QuizContainer;

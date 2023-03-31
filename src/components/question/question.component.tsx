@@ -1,24 +1,26 @@
-import { ReactNode } from "react";
 // Types
-import { QuestionType } from "../../context/data/data.types";
-// Style
-import { QuestionContainer } from "./question.style";
+import { QuestionType } from "../../context/quiz-context/quiz.types";
+
+// Components
+import Option from "../option/option.component";
+import QuestionContainer from "./question.style";
 
 type QuestionProps = {
     question: QuestionType;
-    handleQuestionAnswer: (answerId : number) => void;
-    children: ReactNode,
+    children?: React.ReactNode;
 }
 
-const Question = ({ question, children }: QuestionProps) => {
-
-    const {id, text, options} = question;
+const Question = ({question,children}:QuestionProps) => {
+    
+    const {prompt} = question;
 
     return (
         <QuestionContainer>
-            <p className="question-text">{text}</p>
-            <section className="options-container">
-                {children}
+            <section className="prompt-section">
+                <p>{prompt}</p>
+            </section>
+            <section className="options-section">
+                {children}    
             </section>
         </QuestionContainer>
     )
